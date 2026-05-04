@@ -5,6 +5,7 @@ import sessionRoute from "./routes/session.route.js";
 import { cors } from "hono/cors";
 import webhookRoute from "./routes/webhooks.route.js";
 import { consumer, producer } from "./utils/kafka.js";
+import { shouldBeUser } from "./middleware/authMiddleware.js";
 
 const app = new Hono();
 app.use("*", clerkMiddleware());
@@ -16,6 +17,10 @@ app.get("/health", (c) => {
     uptime: process.uptime(),
     timestamp: Date.now(),
   });
+});
+
+app.get("/test", shouldBeUser, (c) => {
+  return c.json({ message: "Payment service in Authenticated!", userId: c.get("userId")});
 });
 
 app.route("/sessions", sessionRoute);

@@ -17,7 +17,7 @@ export const shouldBeUser = async (
 ) => {
   const auth = await getAuth(req);
   const userId = auth?.userId;
-
+  
   if (!userId) {
     return res.status(401).json({ message: "You need to login first" });
   }
