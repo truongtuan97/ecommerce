@@ -11,6 +11,8 @@ export const createStripeProduct = async (item: StripeProductType) => {
         unit_amount: item.price * 100,
       },
     });
+
+    console.log("Hook into create product: ", res);
     return res;
   } catch (error) {
     console.error(error);
